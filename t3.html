@@ -52,20 +52,23 @@
       line-height: 100px;
       text-align: center;
       cursor: pointer;
+      
     }
+    
     .flipped {
       transform: rotateY(180deg);
     }
     .message-container {
       margin-top: 10px;
       padding: 10px;
-      background-color: #e74c3c;
+      background-color: #5dde22;
       color: white;
       display: none;
     }
     .win-message {
-      background-color: #2ecc71;
+      background-color: #dfc30f;
     }
+    
   </style>
 </head>
 
@@ -132,13 +135,16 @@
     }
 
     function flipCard(card) {
-      card.classList.toggle('flipped');
+  card.classList.toggle('flipped');
 
-      const flippedCards = document.querySelectorAll('.flipped');
-      if (flippedCards.length === 2) {
-        checkMatchingPairs(flippedCards);
-      }
-    }
+  const flippedCards = document.querySelectorAll('.flipped');
+  if (flippedCards.length === 2) {
+    setTimeout(() => {
+      checkMatchingPairs(flippedCards);
+    }, 500); // Adjust the delay if needed
+  }
+}
+
 
     function checkMatchingPairs(flippedCards) {
       const [firstCard, secondCard] = flippedCards;
