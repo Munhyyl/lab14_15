@@ -63,6 +63,9 @@
       color: white;
       display: none;
     }
+    .win-message {
+      background-color: #2ecc71;
+    }
   </style>
 </head>
 
@@ -143,9 +146,14 @@
       if (firstCard.textContent === secondCard.textContent) {
         displayMessage('Congratulations! You found a matching pair!');
         flippedCards.forEach(card => card.remove());;
+
+        if (document.querySelectorAll('.card').length === 0) {
+          displayMessage('You won! All cards are destroyed.', 'win-message');
+        }
       } else {
         setTimeout(() => {
           flippedCards.forEach(card => card.classList.remove('flipped'));
+          resetMessage();
         }, 1000); 
       }
     }
@@ -156,15 +164,17 @@
         [array[i], array[j]] = [array[j], array[i]];
       }
     }
-    function displayMessage(message) {
+    function displayMessage(message,className = '') {
       const messageContainer = document.getElementById('message-container');
       messageContainer.textContent = message;
+      messageContainer.className = `message-container ${className}`;
       messageContainer.style.display = 'block';
     }
 
     function resetMessage() {
       const messageContainer = document.getElementById('message-container');
       messageContainer.textContent = '';
+      messageContainer.className = 'message-container';
       messageContainer.style.display = 'none';
     }
   </script>
