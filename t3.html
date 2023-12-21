@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>memocard</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      padding: 10px;
+      color: white;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    main {
+      margin-top: 20px;
+    }
+
+    button.play-btn {
+      padding: 20px;
+      font-size: 20px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+
+    .card {
+      width: 100px;
+      height: 100px;
+      margin: 5px;
+      display: inline-block;
+      background-color: #3498db;
+      color: white;
+      font-size: 24px;
+      line-height: 100px;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>memocard</h1>
+  </header>
+
+  <nav>
+    <button>Home</button>
+    <button class="play-btn">Play</button>
+  </nav>
+
+  <main>
+    <section>
+      <h2>Welcome to memocard</h2>
+      <p>Let's play </p>
+    </section>
+
+    <section class="play-area" style="display: none;">
+      <h2>Matching Game</h2>
+      <div id="game-container">
+        <!-- Cards will be dynamically added here -->
+      </div>
+      <button onclick="startMatchingGame()">Start Matching Game</button>
+    </section>
+
+  </main>
+
+  
+
+  <script>
+    let matchingGameActive = false;
+
+    document.querySelector('.play-btn').addEventListener('click', function () {
+      document.querySelector('.play-area').style.display = 'block';
+     
+    });
+
+    document.querySelector('.learn-btn').addEventListener('click', function () {
+      document.querySelector('.play-area').style.display = 'none';
+     
+    });
+
+    function startMatchingGame() {
+      alert('Get ready for the Matching Game! Click on the cards to find matching pairs.');
+      matchingGameActive = true;
+
+      const symbols = ['🌈', '🦄', '🌟', '🚀', '🍭', '🎈', '🎨', '🎁'];
+      const cardSymbols = symbols.concat(symbols); // Duplicate symbols to create pairs
+      shuffleArray(cardSymbols);
+
+      const gameContainer = document.getElementById('game-container');
+      gameContainer.innerHTML = '';
+
+      cardSymbols.forEach(symbol => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.textContent = symbol;
+        card.addEventListener('click', function () {
+          if (matchingGameActive) {
+            flipCard(card);
+          }
+        });
+        gameContainer.appendChild(card);
+      });
+    }
+
+    function flipCard(card) {
+      card.classList.toggle('flipped');
+
+      const flippedCards = document.querySelectorAll('.flipped');
+      if (flippedCards.length === 2) {
+        checkMatchingPairs(flippedCards);
+      }
+    }
+
+    function checkMatchingPairs(flippedCards) {
+      const [firstCard, secondCard] = flippedCards;
+
+      if (firstCard.textContent === secondCard.textContent) {
+        alert('Congratulations! You found a matching pair!');
+        flippedCards.forEach(card => card.classList.remove('flipped'));
+      } else {
+        setTimeout(() => {
+          flippedCards.forEach(card => card.classList.remove('flipped'));
+        }, 1000); // Flip the cards back after 1 second
+      }
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+  </script>
+</body>
+
+</html>
