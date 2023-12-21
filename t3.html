@@ -53,6 +53,9 @@
       text-align: center;
       cursor: pointer;
     }
+    .flipped {
+      transform: rotateY(180deg);
+    }
   </style>
 </head>
 
@@ -135,11 +138,11 @@
 
       if (firstCard.textContent === secondCard.textContent) {
         alert('Congratulations! You found a matching pair!');
-        flippedCards.forEach(card => card.classList.remove('flipped'));
+        flippedCards.forEach(card => card.remove());;
       } else {
         setTimeout(() => {
           flippedCards.forEach(card => card.classList.remove('flipped'));
-        }, 1000); // Flip the cards back after 1 second
+        }, 1000); 
       }
     }
 
